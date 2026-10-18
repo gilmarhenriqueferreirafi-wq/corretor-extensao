@@ -1,0 +1,35 @@
+{
+  "manifest_version": 3,
+  "name": "Corretor de Escrita",
+  "version": "1.0.0",
+  "description": "Corrige erros de escrita em qualquer campo de texto da web, com modo automático ou tela de sugestões.",
+  "author": "Gilmar Henrique",
+  "permissions": ["storage", "activeTab", "scripting"],
+  "host_permissions": [
+    "https://api.languagetool.org/*",
+    "https://*/*",
+    "http://*/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["shared.js", "content.js"],
+      "css": ["content.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Corretor de Escrita"
+  },
+  "options_page": "options.html",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "corretor-escrita@extensao.local",
+      "strict_min_version": "109.0"
+    }
+  }
+}

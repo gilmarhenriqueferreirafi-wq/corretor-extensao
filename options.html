@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<title>Configurações — Corretor de Escrita</title>
+<style>
+  body {
+    font-family: system-ui, sans-serif;
+    max-width: 520px;
+    margin: 40px auto;
+    background: #17171b;
+    color: #f2f2f5;
+    padding: 0 20px;
+  }
+  h1 { font-size: 20px; }
+  h2 { font-size: 15px; color: #a7a7b3; margin-top: 28px; }
+  .card {
+    background: #1e1e24;
+    border-radius: 10px;
+    padding: 16px;
+    margin-top: 10px;
+  }
+  .field {
+    margin-bottom: 14px;
+  }
+  label {
+    display: block;
+    font-size: 13px;
+    color: #d5d5db;
+    margin-bottom: 4px;
+  }
+  input[type="text"], input[type="number"], select {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 8px;
+    border-radius: 6px;
+    border: 1px solid #3a3a44;
+    background: #2a2a33;
+    color: #f2f2f5;
+    font-size: 13px;
+  }
+  .hint {
+    font-size: 11px;
+    color: #7a7a86;
+    margin-top: 4px;
+  }
+  .site-list, .word-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 10px;
+  }
+  .site-item, .word-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #2a2a33;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 13px;
+  }
+  .site-item button, .word-item button {
+    background: none;
+    border: none;
+    color: #e05d5d;
+    cursor: pointer;
+    font-size: 13px;
+  }
+  .add-row {
+    display: flex;
+    gap: 6px;
+  }
+  .add-row input { flex: 1; }
+  button.primary {
+    background: #3d5afe;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 14px;
+    font-size: 13px;
+    cursor: pointer;
+  }
+  #saved-msg {
+    font-size: 12px;
+    color: #6fdc8c;
+    margin-left: 10px;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .signature {
+    text-align: center;
+    margin: 24px 0 10px;
+    font-size: 11px;
+    color: #5a5a66;
+  }
+</style>
+</head>
+<body>
+  <h1>Configurações do Corretor</h1>
+
+  <div class="card">
+    <h2 style="margin-top:0;">Correção</h2>
+    <div class="field">
+      <label for="language">Idioma padrão</label>
+      <select id="language"></select>
+    </div>
+    <div class="field">
+      <label for="mode">Modo</label>
+      <select id="mode">
+        <option value="auto">Automático (corrige sozinho)</option>
+        <option value="suggestions">Sugestões (você escolhe)</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="debounceMs">Tempo de espera após parar de digitar (ms)</label>
+      <input type="number" id="debounceMs" min="200" step="100" />
+    </div>
+    <div class="field">
+      <label for="minTextLength">Tamanho mínimo de texto para checar</label>
+      <input type="number" id="minTextLength" min="1" />
+    </div>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0;">Palavras e frases ignoradas</h2>
+    <div class="hint" style="margin-bottom: 10px;">
+      Termos aqui nunca serão marcados como erro (ex: gírias, nomes, apelidos, termos técnicos).
+    </div>
+    <div class="word-list" id="word-list"></div>
+    <div class="add-row">
+      <input type="text" id="new-word" placeholder="ex: ta, vc, nome da empresa..." />
+      <button class="primary" id="add-word">Adicionar</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0;">API do LanguageTool</h2>
+    <div class="field">
+      <label for="apiUrl">Endpoint da API</label>
+      <input type="text" id="apiUrl" />
+      <div class="hint">Padrão: https://api.languagetool.org/v2/check — troque se você hospedar seu próprio servidor LanguageTool.</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2 style="margin-top:0;">Sites desativados</h2>
+    <div class="site-list" id="site-list"></div>
+    <div class="add-row">
+      <input type="text" id="new-site" placeholder="exemplo.com" />
+      <button class="primary" id="add-site">Adicionar</button>
+    </div>
+  </div>
+
+  <div style="margin-top: 20px;">
+    <button class="primary" id="save">Salvar configurações</button>
+    <span id="saved-msg">Salvo!</span>
+  </div>
+
+  <div class="signature">by Gilmar Henrique</div>
+
+  <script src="shared.js"></script>
+  <script src="options.js"></script>
+</body>
+</html>
